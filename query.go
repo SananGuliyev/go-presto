@@ -203,6 +203,7 @@ func (q *Query) fetchNext() error {
 
 	q.bufferedRows = result.Data
 	q.state = result.Stats.State
+	q.stats = result.Stats
 
 	if q.columns == nil && len(result.Columns) > 0 {
 		q.columns = make([]string, len(result.Columns))
