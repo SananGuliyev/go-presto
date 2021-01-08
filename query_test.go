@@ -35,4 +35,5 @@ func TestQuery(t *testing.T) {
 	assert.Equal(t, 1, len(q.Columns()))
 	assert.Equal(t, expectedColumn, q.Columns()[:0])
 	assert.Less(t, 0, len(q.Id()))
+	assert.IsType(t, Stats{}, q.Stats())
 }

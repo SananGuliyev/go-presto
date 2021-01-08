@@ -27,6 +27,7 @@ type Query struct {
 	closed  bool
 	id      string
 	columns []string
+	stats   Stats
 
 	bufferedRows [][]interface{}
 	state        string
@@ -49,12 +50,22 @@ type queryResult struct {
 			Message string `json:"message"`
 		} `json:"failureInfo"`
 	} `json:"error"`
-	Stats struct {
-		State           string `json:"state"`
-		Scheduled       bool   `json:"scheduled"`
-		CompletedSplits int    `json:"completedSplits"`
-		TotalSplits     int    `json:"totalSplits"`
-	} `json:"stats"`
+	Stats Stats `json:"stats"`
+}
+
+type Stats struct {
+	State           string `json:"state"`
+	Scheduled       bool   `json:"scheduled"`
+	Nodes           int    `json:"nodes"`
+	TotalSplits     int    `json:"totalSplits"`
+	QueuesSplits    int    `json:"queuedSplits"`
+	RunningSplits   int    `json:"runningSplits"`
+	CompletedSplits int    `json:"completedSplits"`
+	UserTimeMillis  int    `json:"userTimeMillis"`
+	CPUTimeMillis   int    `json:"cpuTimeMillis"`
+	WallTimeMillis  int    `json:"wallTimeMillis"`
+	ProcessedRows   int    `json:"processedRows"`
+	ProcessedBytes  int    `json:"processedBytes"`
 }
 
 func NewQuery(host, user, source, catalog, schema, query string) (*Query, error) {
@@ -114,6 +125,11 @@ func (q *Query) Progress() float64 {
 // Id returns a execution id of the query.
 func (q *Query) Id() string {
 	return q.id
+}
+
+// Stats returns a execution id of the query.
+func (q *Query) Stats() Stats {
+	return q.stats
 }
 
 // Close closes the query, and cancels it if started.
