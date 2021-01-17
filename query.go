@@ -246,10 +246,18 @@ func (q *Query) fetchResult(req *http.Request) (*queryResult, error) {
 
 func (q *Query) makeRequest(req *http.Request) (*http.Response, error) {
 	req.Header.Add(userAgentHeader, userAgent)
-	req.Header.Add(userHeader, q.user)
-	req.Header.Add(catalogHeader, q.catalog)
-	req.Header.Add(schemaHeader, q.schema)
-	req.Header.Add(sourceHeader, q.source)
+
+	// PrestoDB headers
+	req.Header.Add(userHeaderPresto, q.user)
+	req.Header.Add(catalogHeaderPresto, q.catalog)
+	req.Header.Add(schemaHeaderPresto, q.schema)
+	req.Header.Add(sourceHeaderPresto, q.source)
+
+	// Trino (formerly PrestoSQL) headers
+	req.Header.Add(userHeaderTrino, q.user)
+	req.Header.Add(catalogHeaderTrino, q.catalog)
+	req.Header.Add(schemaHeaderTrino, q.schema)
+	req.Header.Add(sourceHeaderTrino, q.source)
 
 	// Sometimes presto returns a 503 to indicate that results aren't yet
 	// available, and we should retry after waiting a bit.
