@@ -1,16 +1,25 @@
 /*
-Package presto provides a standard database/sql driver for Facebook's Presto
-query engine.
+Package presto-trino provides a standard database/sql driver for
+Facebook's Presto and Trino query engine.
 */
 package presto
 
 const (
-	version = "0.1.1"
+	version = "0.1.5"
 
-	userHeader      = "X-Presto-User"
-	sourceHeader    = "X-Presto-Source"
-	catalogHeader   = "X-Presto-Catalog"
-	schemaHeader    = "X-Presto-Schema"
+	// Presto headers
+	userHeaderPresto    = "X-Presto-User"
+	sourceHeaderPresto  = "X-Presto-Source"
+	catalogHeaderPresto = "X-Presto-Catalog"
+	schemaHeaderPresto  = "X-Presto-Schema"
+
+	// Trino headers
+	userHeaderTrino    = "X-Trino-User"
+	sourceHeaderTrino  = "X-Trino-Source"
+	catalogHeaderTrino = "X-Trino-Catalog"
+	schemaHeaderTrino  = "X-Trino-Schema"
+
+	// General headers
 	userAgentHeader = "User-Agent"
-	userAgent       = "go-presto/" + version
+	userAgent       = "go-presto-trino/" + version
 )
